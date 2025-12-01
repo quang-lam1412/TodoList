@@ -35,15 +35,16 @@ export default function TodoList() {
     syncReactTolocal((todosObj: Todo[]) => [...todosObj, todo])
   }
   const handleDoneTodo = (id: string, done: boolean) => {
-    setTodos((prev) => {
-      return prev.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, done }
-        }
-        return todo
-      })
+    const newTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, done }
+      }
+      return todo
     })
+    setTodos(newTodos)
+    localStorage.setItem('todos', JSON.stringify(newTodos))
   }
+
   const startEditTodo = (id: string) => {
     const findedTodo = todos.find((todo) => todo.id === id)
     if (findedTodo) {
